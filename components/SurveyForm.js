@@ -22,7 +22,7 @@ export function renderSurveyForm(isSubmitting = false) {
           <label class="block text-lg font-bold text-[#475569] uppercase tracking-wider">
             01. 세미나가 기대에 부합했나요? <span class="text-indigo-500">*</span>
           </label>
-          <span id="expectations-value" class="text-lg font-black text-indigo-600 font-mono">
+          <span id="expectations-value" class="text-lg font-black text-lime-600 font-mono">
             ${isExpectationSet ? expectations : '-'}
           </span>
         </div>
@@ -31,7 +31,7 @@ export function renderSurveyForm(isSubmitting = false) {
           <!-- Discrete dots background - Aligned to thumb center travel path -->
           <div class="absolute inset-0 flex justify-between items-center pointer-events-none px-[11px] h-[40px]">
             ${[1, 2, 3, 4, 5].map(i => `
-              <div class="w-1.5 h-1.5 rounded-full ${expectations >= i && isExpectationSet ? 'bg-indigo-400' : 'bg-slate-300'} transition-colors duration-200"></div>
+              <div class="w-1.5 h-1.5 rounded-full ${expectations >= i && isExpectationSet ? 'bg-lime-500' : 'bg-slate-300'} transition-colors duration-200"></div>
             `).join('')}
           </div>
           
@@ -51,7 +51,7 @@ export function renderSurveyForm(isSubmitting = false) {
         <div class="flex justify-between px-[6px] -mt-1 mb-4 pointer-events-none">
           ${[1, 2, 3, 4, 5].map(i => `
             <span class="text-[11px] font-bold transition-all duration-200 w-[10px] text-center
-              ${expectations === i && isExpectationSet ? 'text-indigo-600 scale-125' : 'text-slate-300'}">
+              ${expectations === i && isExpectationSet ? 'text-lime-600 scale-125' : 'text-slate-300'}">
               ${i}
             </span>
           `).join('')}
