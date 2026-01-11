@@ -52,7 +52,6 @@ async function handleAdminAccess() {
     setState({ isAdminMode: !state.isAdminMode });
     return;
   }
-  // Open custom modal instead of prompt
   setState({ isAuthModalOpen: true });
 }
 
@@ -74,7 +73,10 @@ async function verifyAdminCode(code) {
       });
     } catch (error) {
       console.error("Error fetching documents: ", error);
-      alert("데이터를 불러오는 중 오류가 발생했습니다.");
+      const msg = error.code === 'permission-denied' 
+        ? "Firebase 보안 규칙에서 'read' 권한이 거부되었습니다. 규칙을 'allow read: if true;'로 수정해주세요."
+        : "데이터를 불러오는 중 오류가 발생했습니다.";
+      alert(msg);
       setState({ isSubmitting: false });
     }
   } else {
@@ -106,8 +108,8 @@ function renderAuthModal() {
             type="password" 
             id="admin-code-input" 
             class="input-enterprise text-center text-2xl tracking-[1em] font-bold"
-            autofocus
             placeholder="••••"
+            autocomplete="off"
           />
           <div class="flex gap-2">
             <button type="button" id="close-auth-btn" class="flex-1 py-3 text-sm font-bold text-slate-500 hover:bg-slate-50 rounded-xl transition-colors">취소</button>
@@ -172,7 +174,10 @@ function render() {
     const backdrop = document.getElementById('auth-backdrop');
     const input = document.getElementById('admin-code-input');
 
-    if (input) input.focus();
+    // Use a small timeout to ensure DOM is ready before focusing
+    if (input) {
+      setTimeout(() => input.focus(), 50);
+    }
 
     authForm.onsubmit = (e) => {
       e.preventDefault();
