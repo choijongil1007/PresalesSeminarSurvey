@@ -17,15 +17,29 @@ export function setState(newState) {
   render();
 }
 
+/**
+ * Generates a seminar ID based on current date (YYMM format)
+ * Example: January 2026 -> 2601
+ */
+function generateSeminarId() {
+  const now = new Date();
+  const year = String(now.getFullYear()).slice(-2);
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  return year + month;
+}
+
 async function handleSubmit(data) {
   if (state.isSubmitting) return;
 
   setState({ isSubmitting: true });
 
   try {
-    // Save data to Firebase Firestore
+    const seminarId = generateSeminarId();
+
+    // Save data to Firebase Firestore with automatically generated seminarId
     await addDoc(collection(db, "survey_responses"), {
       ...data,
+      seminarId: seminarId,
       submittedAt: serverTimestamp()
     });
 
