@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PreSales Lab Survey</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Deal Architect Design System - Modern Enterprise SaaS Style */
+    html {
+        overflow-y: scroll;
+    }
+
+    body {
+        font-family: 'Outfit', 'Inter', 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        background-color: #F8FAFC;
+    }
+
+    /* 1. Custom Scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #CBD5E1;
+        border-radius: 99px;
+        border: 2px solid transparent;
+        background-clip: content-box;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #94A3B8;
+    }
+
+    /* 2. Loader */
+    .spinner {
+        width: 32px;
+        height: 32px;
+        border: 3px solid rgba(79, 70, 229, 0.1);
+        border-radius: 50%;
+        border-top-color: #4F46E5;
+        animation: spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    /* 6. Animations */
+    @keyframes modal-in {
+        0% { opacity: 0; transform: scale(0.98) translateY(8px); }
+        100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal-in { animation: modal-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+    /* 7. Enterprise UI Components */
+    .card-enterprise {
+        background-color: white;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-enterprise:hover {
+        border-color: #CBD5E1;
+        box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
+    }
+
+    .input-enterprise {
+        background-color: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 0.925rem;
+        color: #0F172A;
+        transition: all 0.15s ease;
+        width: 100%;
+    }
+    .input-enterprise:focus {
+        outline: none;
+        border-color: #4F46E5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    /* Enterprise Slider */
+    input[type=range].slider-enterprise {
+        -webkit-appearance: none;
+        width: 100%;
+        background: transparent;
+        height: 40px;
+        cursor: pointer;
+    }
+    input[type=range].slider-enterprise::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 22px;
+        width: 22px;
+        border-radius: 50%;
+        background: #4F46E5;
+        border: 4px solid white;
+        cursor: pointer;
+        margin-top: -9px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 30;
+    }
+    input[type=range].slider-enterprise:active::-webkit-slider-thumb {
+        transform: scale(1.2);
+        box-shadow: 0 0 0 8px rgba(79, 70, 229, 0.1);
+    }
+    input[type=range].slider-enterprise::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 4px;
+        background: #E2E8F0;
+        border-radius: 2px;
+        position: relative;
+        z-index: 10;
+    }
+  </style>
+  <script type="importmap">
+{
+  "imports": {
+    "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+    "firebase/firestore": "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js",
+    "firebase/analytics": "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js",
+    "firebase/": "https://esm.sh/firebase@^12.7.0/"
+  }
+}
+</script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="index.js"></script>
+</body>
+</html>
