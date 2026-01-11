@@ -9,6 +9,7 @@ let state = {
   isSubmitted: false,
   isSubmitting: false,
   isAdminMode: false,
+  isAuthModalOpen: false,
   isAuthenticated: false,
   formData: null,
   allResponses: []
@@ -51,10 +52,13 @@ async function handleAdminAccess() {
     setState({ isAdminMode: !state.isAdminMode });
     return;
   }
+  // Open custom modal instead of prompt
+  setState({ isAuthModalOpen: true });
+}
 
-  const code = prompt("관리자 코드를 입력하세요:");
+async function verifyAdminCode(code) {
   if (code === "1007") {
-    setState({ isSubmitting: true });
+    setState({ isSubmitting: true, isAuthModalOpen: false });
     try {
       const q = query(collection(db, "survey_responses"), orderBy("submittedAt", "desc"));
       const querySnapshot = await getDocs(q);
@@ -70,16 +74,49 @@ async function handleAdminAccess() {
       });
     } catch (error) {
       console.error("Error fetching documents: ", error);
-      alert("데이터를 불러오는 중 오류가 발생했습니다. 권한이 있는지 확인하세요.");
+      alert("데이터를 불러오는 중 오류가 발생했습니다.");
       setState({ isSubmitting: false });
     }
-  } else if (code !== null) {
+  } else {
     alert("코드가 일치하지 않습니다.");
   }
 }
 
 function resetSurvey() {
-  setState({ isSubmitted: false, isSubmitting: false, formData: null, isAdminMode: false });
+  setState({ isSubmitted: false, isSubmitting: false, formData: null, isAdminMode: false, isAuthModalOpen: false });
+}
+
+function renderAuthModal() {
+  if (!state.isAuthModalOpen) return '';
+  return `
+    <div id="auth-backdrop" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-modal-in">
+      <div class="card-enterprise w-full max-w-sm p-8 shadow-2xl scale-100">
+        <div class="text-center mb-6">
+          <div class="w-12 h-12 bg-indigo-50 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-slate-800">관리자 인증</h3>
+          <p class="text-sm text-slate-500 mt-1">접근 코드를 입력하세요.</p>
+        </div>
+        
+        <form id="auth-form" class="space-y-4">
+          <input 
+            type="password" 
+            id="admin-code-input" 
+            class="input-enterprise text-center text-2xl tracking-[1em] font-bold"
+            autofocus
+            placeholder="••••"
+          />
+          <div class="flex gap-2">
+            <button type="button" id="close-auth-btn" class="flex-1 py-3 text-sm font-bold text-slate-500 hover:bg-slate-50 rounded-xl transition-colors">취소</button>
+            <button type="submit" class="flex-1 py-3 text-sm font-bold bg-indigo-600 text-white hover:bg-indigo-700 rounded-xl shadow-lg shadow-indigo-200 transition-all">확인</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
 }
 
 function render() {
@@ -123,9 +160,30 @@ function render() {
         </footer>
       </div>
     </div>
+    ${renderAuthModal()}
   `;
 
   document.getElementById('admin-btn').onclick = handleAdminAccess;
+
+  // Modal event listeners
+  if (state.isAuthModalOpen) {
+    const authForm = document.getElementById('auth-form');
+    const closeBtn = document.getElementById('close-auth-btn');
+    const backdrop = document.getElementById('auth-backdrop');
+    const input = document.getElementById('admin-code-input');
+
+    if (input) input.focus();
+
+    authForm.onsubmit = (e) => {
+      e.preventDefault();
+      verifyAdminCode(input.value);
+    };
+
+    closeBtn.onclick = () => setState({ isAuthModalOpen: false });
+    backdrop.onclick = (e) => {
+      if (e.target === backdrop) setState({ isAuthModalOpen: false });
+    };
+  }
 
   if (state.isAdminMode) {
     attachAdminListeners();
