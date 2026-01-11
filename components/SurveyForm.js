@@ -19,7 +19,7 @@ export function renderSurveyForm(isSubmitting = false) {
       <!-- Q1 -->
       <section>
         <div class="flex justify-between items-end mb-6">
-          <label class="block text-sm font-bold text-[#475569] uppercase tracking-wider">
+          <label class="block text-lg font-bold text-[#475569] uppercase tracking-wider">
             01. 세미나가 기대에 부합했나요? <span class="text-indigo-500">*</span>
           </label>
           <span id="expectations-value" class="text-lg font-black text-indigo-600 font-mono">
@@ -65,7 +65,7 @@ export function renderSurveyForm(isSubmitting = false) {
 
       <!-- Q2 -->
       <section>
-        <label class="block text-sm font-bold text-[#475569] uppercase tracking-wider mb-6">
+        <label class="block text-lg font-bold text-[#475569] uppercase tracking-wider mb-6">
           02. 가장 도움이 된 부분은? <span class="text-slate-400 text-xs font-normal capitalize">(복수 선택)</span>
         </label>
         <div class="grid grid-cols-1 gap-3">
@@ -99,7 +99,7 @@ export function renderSurveyForm(isSubmitting = false) {
 
       <!-- Q3 -->
       <section>
-        <label class="block text-sm font-bold text-[#475569] uppercase tracking-wider mb-6">
+        <label class="block text-lg font-bold text-[#475569] uppercase tracking-wider mb-6">
           03. 회사/동료에게 추천할 의사가 있나요? <span class="text-indigo-500">*</span>
         </label>
         <div class="flex p-1 bg-slate-100 rounded-xl">
@@ -122,7 +122,7 @@ export function renderSurveyForm(isSubmitting = false) {
 
       <!-- Q4 -->
       <section>
-        <label class="block text-sm font-bold text-[#475569] uppercase tracking-wider mb-4">
+        <label class="block text-lg font-bold text-[#475569] uppercase tracking-wider mb-4">
           04. 앞으로 추가하거나 개선할 점은?
         </label>
         <textarea
@@ -194,8 +194,7 @@ export function attachSurveyListeners(onSubmit) {
     const improvements = document.getElementById('improvements').value;
     await onSubmit({ expectations, helpfulParts, recommend, improvements });
     
-    // Reset local state if successful (handled in App.js resetSurvey if needed, 
-    // but we reset variables here for next session)
+    // Reset local state if successful
     expectations = 3;
     isExpectationSet = false;
     helpfulParts = [];
@@ -220,7 +219,6 @@ export function attachSurveyListeners(onSubmit) {
     const scrollPos = window.scrollY;
     const improvementsVal = document.getElementById('improvements') ? document.getElementById('improvements').value : '';
     
-    // We re-render, App.js will handle the state passed into renderSurveyForm
     mainContent.innerHTML = `<div class="card-enterprise animate-modal-in overflow-hidden">${renderSurveyForm(false)}</div>`;
     
     if (document.getElementById('improvements')) {
