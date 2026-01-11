@@ -27,11 +27,11 @@ export function renderSurveyForm(isSubmitting = false) {
           </span>
         </div>
         
-        <div class="relative px-2">
-          <!-- Discrete dots background -->
-          <div class="absolute top-1/2 left-2 right-2 -translate-y-1/2 flex justify-between pointer-events-none px-[2px]">
+        <div class="relative">
+          <!-- Discrete dots background - Aligned to thumb center travel path -->
+          <div class="absolute inset-0 flex justify-between items-center pointer-events-none px-[11px] h-[40px]">
             ${[1, 2, 3, 4, 5].map(i => `
-              <div class="w-2 h-2 rounded-full ${expectations >= i && isExpectationSet ? 'bg-indigo-300' : 'bg-slate-200'} transition-colors"></div>
+              <div class="w-1.5 h-1.5 rounded-full ${expectations >= i && isExpectationSet ? 'bg-indigo-400' : 'bg-slate-300'} transition-colors duration-200"></div>
             `).join('')}
           </div>
           
@@ -48,9 +48,9 @@ export function renderSurveyForm(isSubmitting = false) {
         </div>
 
         <!-- Numeric labels underneath the slider -->
-        <div class="flex justify-between px-2 -mt-1 mb-4 pointer-events-none">
+        <div class="flex justify-between px-[6px] -mt-1 mb-4 pointer-events-none">
           ${[1, 2, 3, 4, 5].map(i => `
-            <span class="text-[11px] font-bold transition-all duration-200 w-4 text-center
+            <span class="text-[11px] font-bold transition-all duration-200 w-[10px] text-center
               ${expectations === i && isExpectationSet ? 'text-indigo-600 scale-125' : 'text-slate-300'}">
               ${i}
             </span>
