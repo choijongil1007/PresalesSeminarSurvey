@@ -7,9 +7,9 @@ let recommend = null;
 const options = [
   '프리세일즈 개요',
   'BSA Framework',
-  '고객 여정 실습',
-  'APMP 협회 소개',
-  '외국계 기업에서 엔지니어로 살아남기',
+  '내가 이 제안서를 왜 쓰는 걸까?',
+  '고객 여정 맵 & 프리세일즈 활동',
+  'Deal Architect 실습',
   '의견 교환 및 네트워킹'
 ];
 
